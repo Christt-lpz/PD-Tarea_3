@@ -8,55 +8,47 @@
 #
 
 library(shiny)
-library(dplyr)
-library(DT)
-library(stringr)
 library(ggplot2)
-
-library(data.table) #libreria necesaria para cambido de nombre
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
-  data<-reactive({
-    contenido_archivo<-input$lecturaArchivo
+  output$grafica_base_R <- renderPlot({
+
     
-    if  (is.null(contenido_archivo))
-    {
-      return(NULL)
-    }else 
-    {out<-readr::read_csv(contenido_archivo$datapath)  
-    df= data.frame(out)
-    return(df$yr)}
+    if (is.null(input$clk)==FALSE)
+    {colorA="green"
+    colorB="green" }
+    else if (is.null(input$dclk)==FALSE)
+    {colorA="white"
+    colorB="black"}
+    else if (is.null(input$mouse_over)==FALSE)
+    { colorA="gray"
+    colorB="gray"}
+    else if (is.null(input$mouse_brush)==FALSE)
+    {colorA="green"
+    colorB="black" 
+    }
+    else {
+      colorA="blue"
+      colorB="blue" }
+    
+    
+    plot(mtcars$wt, mtcars$mpg, xlab='wt', ylab='millas pro galon',
+         col=colorA, bg = colorB  , pch = 21)
+  
     
   })
   
-  output$histo <-renderPlot({
-    
-    if (is.null(input$clickuno)==FALSE)
-    {color="green"
-    bor="black"}
-   else if (is.null(input$clickdos)==FALSE)
-   {color="white"
-   bor="black"}
-    else if (is.null(input$mouse_over)==FALSE)
-    {color="gray"
-    bor="black"}
-    
-    else if (is.null(input$mouse_brush)==FALSE)
-    {bor="green"
-    }
-    else {color="blue"
-          bor="black"}
-    print(color)
-    
-      hist(data(), xlab = "año",  ylab = "Cantida de temblores",
-           main = "Historial de temblores", 
-           col=color, border = bor )
-
-  }) 
-
-
   
+  
+    output$click_data <- renderPrint(
+    
+    list(
+     click_XY= c(input$clk$x, input$clk$y),
+     doble_click_XY= c(input$dclk$x, input$dclk$y))
+    
+    
+  )
+    
 })
-
