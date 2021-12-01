@@ -46,7 +46,10 @@ shinyServer(function(input, output) {
     
     list(
      click_XY= c(input$clk$x, input$clk$y),
-     doble_click_XY= c(input$dclk$x, input$dclk$y))
+     doble_click_XY= c(input$dclk$x, input$dclk$y),
+      brus_XY = c(input$mouse_brush$xmin, input$mouse_brush$ymin ,
+                  input$mouse_brush$xmax, input$mouse_brush$ymaX))
+                
     
     
   )
