@@ -8,31 +8,29 @@
 #
 
 library(shiny)
-library(DT)
-library(stringr)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
   
-  # Application title
-  titlePanel("Tarea 3"),
-  sidebarPanel(
-    
-    fileInput("lecturaArchivo", "seleccione archivo",
-              buttonLabel = 'Buscar',
-              placeholder = 'ruta achivo'
-    ),
+  titlePanel("Tara 3"),
   
   
-  mainPanel (
-   # DT::dataTableOutput ("ver"),
-    plotOutput("histo", 
-               click = "clickuno", 
-               dblclick = "clickdos",
-               hover="mouse_over",
-               brush="mouse_brush")
+  tabsetPanel(
+    tabPanel ('Graficas  shiny',
+              h1('Graficas en shiny'),
+              plotOutput('grafica_base_R',
+                         click ='clk',
+                         dblclick='dclk',
+                         hover ='mouse_hover',
+                         brush = 'mouse_brush'
+                         ),
+              verbatimTextOutput('click_data')
+              
+              
+    )
     
-  )  
-  )    
 
+  
+  )
 ))
+
